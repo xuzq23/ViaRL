@@ -153,14 +153,7 @@ class ReinforcePlusPlusTrainerStage2(Trainer):
             model_init_kwargs["use_cache"] = (
                 False if args.gradient_checkpointing else model_init_kwargs.get("use_cache")
             )
-            if "Qwen2-VL" in model_id or "qwen2_vl" in model_id:
-                model = Qwen2VLForConditionalGeneration.from_pretrained(model2, **model_init_kwargs)
-            elif "Qwen2.5-VL" in model_id or "qwen25vl" in model_id or "Qwen25VL" in model_id:
-                model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model2, **model_init_kwargs)
-            elif "Aria" in model_id:
-                model_init_kwargs.pop("use_cache")
-                model = AriaForConditionalGeneration.from_pretrained(model2, **model_init_kwargs)
-            elif "LLaVA-Video" in model_id or "LLaVAVideo" in model_id:
+            if "LLaVA-Video" in model_id or "LLaVAVideo" in model_id:
                 overwrite_config = {}
                 tokenizer2, model, image_processor2, _ = load_pretrained_model(
                     model2, 
@@ -171,6 +164,13 @@ class ReinforcePlusPlusTrainerStage2(Trainer):
                 self.tokenizer2 = tokenizer2
                 self.conv_template = "qwen_1_5"  # Make sure you use correct chat template for different models
                 self.processor2 = image_processor2
+            elif "Qwen2-VL" in model_id or "qwen2_vl" in model_id:
+                model = Qwen2VLForConditionalGeneration.from_pretrained(model2, **model_init_kwargs)
+            elif "Qwen2.5-VL" in model_id or "qwen25vl" in model_id or "Qwen25VL" in model_id:
+                model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model2, **model_init_kwargs)
+            elif "Aria" in model_id:
+                model_init_kwargs.pop("use_cache")
+                model = AriaForConditionalGeneration.from_pretrained(model2, **model_init_kwargs)
             else:
                 model = AutoModelForCausalLM.from_pretrained(model2, **model_init_kwargs)
         else:
@@ -208,7 +208,9 @@ class ReinforcePlusPlusTrainerStage2(Trainer):
 
         # Processing class for model2
         if processing_class is None:
-            if "Qwen2-VL" in model_id or "qwen2_vl" in model_id or "Qwen2.5-VL" in model_id or "qwen25vl" in model_id or "Qwen25VL" in model_id or "Aria" in model_id:
+            if "LLaVA-Video" in model_id or "LLaVAVideo" in model_id:
+                processing_class = self.tokenizer2
+            elif "Qwen2-VL" in model_id or "qwen2_vl" in model_id or "Qwen2.5-VL" in model_id or "qwen25vl" in model_id or "Qwen25VL" in model_id or "Aria" in model_id:
                 processing_class = AutoProcessor.from_pretrained(model_id)
                 pad_token_id = processing_class.tokenizer.pad_token_id
                 processing_class.pad_token_id = pad_token_id
@@ -216,8 +218,6 @@ class ReinforcePlusPlusTrainerStage2(Trainer):
                 # if "Qwen" in model_id or "Qwen2.5-VL" in model_id:
                     # processing_class.image_processor.max_pixels = max_pixels
                     # processing_class.image_processor.min_pixels = min_pixels
-            elif "LLaVA-Video" in model_id or "LLaVAVideo" in model_id:
-                processing_class = self.tokenizer2
             else:
                 processing_class = AutoTokenizer.from_pretrained(model.config._name_or_path, padding_side="left")
                 # pad_token_id = processing_class.pad_token_id
