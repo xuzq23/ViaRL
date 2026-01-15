@@ -1,0 +1,22 @@
+### model
+method: cot_qwen25vl_2stage
+type: rl
+attn_implementation: "flash_attention_2"
+
+
+### dataset
+dataset_name: lvbench
+anno_file: dataset/lvbench/lvbench.json
+dataloader_num_workers: 2
+
+### data
+sample_fps: 2
+max_num_frames: 128
+longsize_resolution: 896
+
+### generate
+do_sample: false
+
+### output
+output_dir: outputs/viarl_lvbench_f128_f8_r112_r896_rl_think
+log_file: output.txt
