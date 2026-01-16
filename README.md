@@ -52,3 +52,18 @@ Note: Please set model_path1/model_path2/n_gpus in the bash file.
   bash scripts/infer_eval_qwenvl_mlvu_rl.sh
   bash scripts/infer_eval_qwenvl_lvbench_rl.sh
   ```
+
+
+## Citation
+If you find this work useful, please cite
+```
+@misc{xu2025viarladaptivetemporalgrounding,
+      title={ViaRL: Adaptive Temporal Grounding via Visual Iterated Amplification Reinforcement Learning}, 
+      author={Ziqiang Xu and Qi Dai and Tian Xie and Yifan Yang and Kai Qiu and DongDong Chen and Zuxuan Wu and Chong Luo},
+      year={2025},
+      eprint={2505.15447},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2505.15447}, 
+}
+```
