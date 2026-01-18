@@ -12,7 +12,7 @@ pip install transformers==4.51.3
 ```
 
 ## Dataset
-Please download LLaVA-Video-178k firstly. Next, download our jsonl files.
+Please download LLaVA-Video-178k firstly. Next, download our jsonl files from https://huggingface.co/datasets/ViaRL/ViaRL_data.
 
 ## Training
 Note: Please set model1/model2/output_dir/data_path in the bash file. 
@@ -37,7 +37,7 @@ The relevant code can be found in the evaluation directory.
 cd evaluation
 ```
 
-- Step1: Download the models from https://huggingface.co/ViaRL
+- Step1: Download the models from https://huggingface.co/ViaRL/ViaRL_model.
 
 - Step2: Prepare the datasets following the docs.
   - Prepare [VideoMME](evaluation/docs/prepare_videomme.md)
